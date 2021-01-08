@@ -3,6 +3,7 @@ import React,{Component,Fragment} from 'react'
 import './App.css';
 import PT from "prop-types";
 import life from '../src/images/life.jpg';
+import store from '../src/store/index.js'
 
 // function App() {
 //   return (
@@ -163,14 +164,18 @@ class App extends Component{
         {check:true,content:'playing',status:'finished',time:'2020/01/07'},
       ],
       choosen:0,
-    }
+      reduxBox:store.getState(),
+      reduxValue:''
+    },
+    store.subscribe(this.changeStore);
   }
   componentWillMount(){
     console.log('componentWillMount：在页面被渲染前、组件被挂载到页面之前调用，在render之前被调用，因此在这里更改状态state将不会触发重新渲染,componentWillMount只执行一次');
     console.log('注意：1.此时不能获取页面中的dom对象。2.可以调用setState来改变状态值。3.可以发送异步请求')
   }
   render(){
-    console.log('render钩子 作用：渲染组件到页面中，不能在render方法中setState，会导致递归渲染，此时获取不到dom')
+    console.log('render钩子 作用：渲染组件到页面中，不能在render方法中setState，会导致递归渲染，此时获取不到dom');
+    console.log('this.state.reduxBox',this.state.reduxBox)
     return(
       <>
         <div className="app">
@@ -186,6 +191,18 @@ class App extends Component{
           <div className="total-box">
             <span className="num" style={{'margin':'0 15px'}}>总共有{this.state.itemBox.length}条数据</span>
             <span className="choosen">当前选中{this.state.choosen}条</span>
+          </div>
+          <div className="redux-demo">
+            <div className="input-box">
+              <input type="text" placeholder="测试redux" value={this.state.reduxBox.inputVal} onChange={this.changeRedux}/>
+              <button onClick={this.addRedux}>加入到redux中</button>
+            </div>
+            <ul className="content">
+              {this.state.reduxBox.list.length>0?this.state.reduxBox.list.map((cur,idx)=>{
+                return <li className="redux-list" key={idx} onClick={this.delRedux}>{cur}</li>
+              }):''}
+            </ul>
+            
           </div>
           <Study></Study>
         </div>
@@ -245,6 +262,36 @@ class App extends Component{
     console.log('ref',ref);
     console.log('次此处获取的ref为addItem组件，这个组件复制给另一个Additem，然后可以调用里面的方法')
     this.AddItem = ref
+  }
+  changeRedux=(e)=>{
+    // this.setState({
+    //   reduxValue:e.target.value
+    // })
+    let action={
+      type:"input_change_value",
+      value:e.target.value
+    }
+    store.dispatch(action);
+  }
+  addRedux=()=>{
+    console.log('加入redux');
+    let value=this.state.reduxBox.inputVal;
+    let action={
+        type:"input_submit_value",
+        value
+    }
+    store.dispatch(action); 
+  }
+  delRedux=(index)=>{
+    let value=index;
+    let action={
+        type:"input_delete_value",
+        value
+    }
+    store.dispatch(action); 
+  }
+  changeStore(){
+    this.setState(store.getState());
   }
   useChild=()=>{
     this.AddItem.clear();
