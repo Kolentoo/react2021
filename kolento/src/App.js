@@ -283,15 +283,17 @@ class App extends Component{
     store.dispatch(action); 
   }
   delRedux=(index)=>{
-    let value=index;
-    let action={
-        type:"input_delete_value",
-        value
-    }
-    store.dispatch(action); 
+    // let value=index;
+    // let action={
+    //     type:"input_delete_value",
+    //     value
+    // }
+    // store.dispatch(action); 
   }
-  changeStore(){
-    this.setState(store.getState());
+  changeStore=()=>{
+    this.setState({
+      reduxBox:store.getState()
+    });
   }
   useChild=()=>{
     this.AddItem.clear();
