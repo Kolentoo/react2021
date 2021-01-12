@@ -9,16 +9,16 @@ let defaultState={
 
 export default(state=defaultState,action)=>{
   // state是返回提交上去的信息，提交告知修改哪里的数据
-  if(action.type==="input_change_value"){
+  if(action.type==="changeValue"){
       let newState=JSON.parse(JSON.stringify(state));
       newState.inputVal=action.value;
       return newState;
-  }else if(action.type==="input_submit_value"){
+  }else if(action.type==="submitValue"){
       let newState=JSON.parse(JSON.stringify(state));
       newState.inputVal="";
       newState.list.push(action.value);
       return newState;        
-  }else if(action.type==="input_delete_value"){
+  }else if(action.type==="delValue"){
       let newState=JSON.parse(JSON.stringify(state));
       newState.list.splice(action.value,1);
       return newState;        

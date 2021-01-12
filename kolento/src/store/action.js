@@ -1,21 +1,21 @@
 // action
 // 用于告诉store修改哪些数据
-import {INPUT_CHANGE_VALUE,INPUT_SUBMIT_VALUE,INPUT_DELETE_VALUE} from "./actionTypes.js"
-export let getChangeValueAction=(value)=>{
+// import {INPUT_CHANGE_VALUE,INPUT_SUBMIT_VALUE,INPUT_DELETE_VALUE} from "./actionTypes.js"
+export let changeValue=(value)=>{
     return {
-        type:INPUT_CHANGE_VALUE,
+        type:'changeValue',
         value,
     }
 }
-export let getSubmitValueAction=(value)=>{
+export let submitValue=(value)=>{
     return {
-        type:INPUT_SUBMIT_VALUE,
+        type:'submitValue',
         value,
     }
 }
-export let getDeleteValueAction=(value)=>{
+export let delValue=(value)=>{
     return {
-        type:INPUT_DELETE_VALUE,
+        type:'delValue',
         value,
     }
 }

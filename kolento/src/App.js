@@ -4,6 +4,7 @@ import './App.css';
 import PT from "prop-types";
 import life from '../src/images/life.jpg';
 import store from '../src/store/index.js'
+import {changeValue,submitValue,delValue} from './store/action'
 
 // function App() {
 //   return (
@@ -166,7 +167,7 @@ class App extends Component{
       choosen:0,
       reduxBox:store.getState(),
       reduxValue:''
-    },
+    }
     store.subscribe(this.changeStore);
   }
   componentWillMount(){
@@ -264,31 +265,20 @@ class App extends Component{
     this.AddItem = ref
   }
   changeRedux=(e)=>{
-    // this.setState({
-    //   reduxValue:e.target.value
-    // })
-    let action={
-      type:"input_change_value",
-      value:e.target.value
-    }
-    store.dispatch(action);
+    let reduxChangeValue = changeValue(e.target.value);
+    store.dispatch(reduxChangeValue);
   }
   addRedux=()=>{
     console.log('加入redux');
     let value=this.state.reduxBox.inputVal;
-    let action={
-        type:"input_submit_value",
-        value
-    }
-    store.dispatch(action); 
+    let reduxSubmitValue = submitValue(value);
+    store.dispatch(reduxSubmitValue); 
   }
   delRedux=(index)=>{
-    // let value=index;
-    // let action={
-    //     type:"input_delete_value",
-    //     value
-    // }
-    // store.dispatch(action); 
+    console.log('删除redux');
+    let value=index;
+    let reduxDelValue = delValue(value);
+    store.dispatch(reduxDelValue); 
   }
   changeStore=()=>{
     this.setState({
